@@ -5,6 +5,7 @@ import pandas as pd
 from flask_restful import Resource, Api
 
 
+
 @app.route('/', methods=['GET','POST'])
 @app.route('/index', methods=['GET','POST'])
 def main_page():
