@@ -1,1 +1,1 @@
-web: python app:autocoder.py
+web: gunicorn autocoder:app
