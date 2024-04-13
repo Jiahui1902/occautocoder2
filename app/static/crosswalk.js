@@ -17,8 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data.result); 
-            document.getElementById('result').innerHTML = response.result; 
+            
+            console.log(data);             
+
         })
         .catch(error => console.error('Error:', error));
     });
@@ -73,6 +74,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const result = urlParams.get('result');
             if (result) {
                 resultsDiv.textContent = 'Crosswalked to: ' + result;
+            };
+            
+            const checked_onet2soc = urlParams.get('checked_onet2soc');
+            if (checked_onet2soc) {
+            document.querySelector('input[name="codingSystem"][value="onet2soc"]').checked = true;
+            }
+            
+            const checked_soc2cen = urlParams.get('checked_soc2cen');
+            if (checked_soc2cen) {
+            document.querySelector('input[name="codingSystem"][value="soc2cen"]').checked = true;
             }
 });
 
