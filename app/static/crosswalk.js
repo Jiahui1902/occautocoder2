@@ -49,57 +49,6 @@ function uploadFile() {
         }
 
 
-// function downloadCrosswalk() {
-//     fetch("{{ url_for('parse_crosswalk') }}", {
-//         method: 'POST',
-//         body: new FormData(document.getElementById('crosswalkForm')) // Assuming you have a form
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(data);
-//         // document.getElementById("crosswalkdata").innerHTML = "pros";
-//         const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-//         const url = URL.createObjectURL(blob);
-//         const a = document.createElement('a');
-//         a.href = url;
-//         a.download = 'data.json'; // Filename you wish to save as
-//         document.body.appendChild(a);
-//         a.click();
-//         document.body.removeChild(a);
-//         URL.revokeObjectURL(url);
-//     })
-//     .catch(error => console.error('Error:', error));
-// }        
-
-
-
-function downloadCrosswalk() {
-    fetch("{{ url_for('parse_crosswalk') }}", {
-        method: 'POST',
-        body: new FormData(document.getElementById('crosswalkForm'))
-    })
-    .then(response => response.json())
-    .then(response => {    
-        if (response.data && Array.isArray(response.data)) {
-        document.getElementById("crosswalkdata").innerHTML = response.message;
-        // Convert JSON to CSV
-        const csv = jsonToCSV(response.data);
-        const blob = new Blob([csv], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'crosswaled_data.csv';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    } else {
-            console.error('No data to download or data is empty');
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-
 
 // convert JSON to CSV
 function jsonToCSV(json) {
