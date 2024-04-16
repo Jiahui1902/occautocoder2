@@ -1,2 +1,5 @@
 .DS_Store
-workingdata/*
+#workingdata/*
+#static/workingdata/*
+#app/static/workingdata/*
+
