@@ -4,6 +4,8 @@ from flask_cors import CORS
 import pandas as pd
 from flask_restful import Resource, Api
 import os
+from sentence_transformers import SentenceTransformer, util
+import torch
 
 app = Flask(__name__, static_folder='static')
 from app import routes

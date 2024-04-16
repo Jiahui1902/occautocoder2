@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CrossWalk Searcher</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="short icon" href="#">
 </head>
 <body>
   <header>
@@ -22,18 +23,12 @@
   <main>
     <p>Search for occupations using the Crosswalk Searcher. The AutoCoder helps you find occupations that match your skills and interests. This autocoder will return as a 2010 Census code.</p>
 
-    <form action="/" method="post">
+    <form id="autocoderForm" action="{{ url_for('t5occ') }}" method="post">
       <label for="job-title">Job Title:</label>
       <input type="text" id="job-title" name="job_title">
-
-      <label for="education-level">Education Level:</label>
-      <select id="education-level" name="education_level">
-        <option value="">Select</option>
-        <option value="high_school">High School Diploma</option>
-        <option value="associates_degree">Associate's Degree</option>
-        <option value="bachelors_degree">Bachelor's Degree</option>
-        <option value="graduate_degree">Graduate Degree</option>
-      </select>
+      
+      <label for="job-title">Job Duty:</label>
+      <input type="text" id="job-title" name="job_duty">
 
       <label for="industry">Industry:</label>
       <input type="text" id="industry" name="industry">
@@ -48,6 +43,35 @@
       <button type="submit">Search</button>
     </form>
   </main>
+
+  <script>
+    // read form input
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('autocoderForm');
+        if (form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            fetch("{{ url_for('t5occ') }}", {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {                
+                console.log(data);  
+            })
+            .catch(error => console.error('Error:', error));
+        });
+        }else {
+            console.error("Form not found")
+        }
+    });
+  </script>
+
+
 
   <footer>
     <p>&copy; Autocoder CrossWalking</p>
