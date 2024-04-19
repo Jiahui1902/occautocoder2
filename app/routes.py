@@ -84,7 +84,7 @@ def t5occ():
     return render_template('index.html')
 
 
-def t5occsingle(eval_text)
+def t5occsingle(eval_text):
     return eval_text
 # def t5occsingle(eval_text):
 #     dict_text2pums = pd.read_excel("static/dict_text2pums.xlsx")  
