@@ -84,20 +84,22 @@ def t5occ():
     return render_template('index.html')
 
 
-def t5occsingle(eval_text):
-    dict_text2pums = pd.read_excel("static/dict_text2pums.xlsx")  
-    dict_text2pums.index = dict_text2pums.iloc[:,0].to_list()
-    model = SentenceTransformer("static/workingdata")
-    targetlabs = dict_text2pums['Description (2018 Census Occupation Code)']
-    targetembs = torch.load('static/targetembs.pt')
+def t5occsingle(eval_text)
+    return eval_text
+# def t5occsingle(eval_text):
+#     dict_text2pums = pd.read_excel("static/dict_text2pums.xlsx")  
+#     dict_text2pums.index = dict_text2pums.iloc[:,0].to_list()
+#     model = SentenceTransformer("static/workingdata")
+#     targetlabs = dict_text2pums['Description (2018 Census Occupation Code)']
+#     targetembs = torch.load('static/targetembs.pt')
   
-    targetlabs.reset_index(drop=True,inplace=True)
-    input_emb = model.encode(eval_text)
-    cos_sim = [util.cos_sim(input_emb,i) for i in targetembs]
-    all_sentence_combinations = []
-    for i in range(len(cos_sim)-1):
-        all_sentence_combinations.append([cos_sim[i][0][0],i])
-    all_sentence_combinations = sorted(all_sentence_combinations, key=lambda x: x[0], reverse=True)
-    occtext = [targetlabs.iloc[i[1]] for i in all_sentence_combinations[0:1]]
-    occpums = dict_text2pums.loc[str.strip(occtext[0]),'2018 Census PUMS Occupation Code']
-    return {str(occpums):occtext[0]}
+#     targetlabs.reset_index(drop=True,inplace=True)
+#     input_emb = model.encode(eval_text)
+#     cos_sim = [util.cos_sim(input_emb,i) for i in targetembs]
+#     all_sentence_combinations = []
+#     for i in range(len(cos_sim)-1):
+#         all_sentence_combinations.append([cos_sim[i][0][0],i])
+#     all_sentence_combinations = sorted(all_sentence_combinations, key=lambda x: x[0], reverse=True)
+#     occtext = [targetlabs.iloc[i[1]] for i in all_sentence_combinations[0:1]]
+#     occpums = dict_text2pums.loc[str.strip(occtext[0]),'2018 Census PUMS Occupation Code']
+#     return {str(occpums):occtext[0]}
