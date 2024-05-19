@@ -4,4 +4,3 @@ flask_cors==3.0.10
 pandas==2.1.4
 gunicorn==21.2.0
 torch
-sentence_transformers
