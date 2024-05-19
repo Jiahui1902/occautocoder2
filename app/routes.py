@@ -2,9 +2,10 @@ from app import app
 from flask import Flask, request, jsonify, after_this_request, render_template, redirect, url_for
 from flask_cors import CORS
 import pandas as pd
+import numpy as np
 import os
-import torch
 from flask_restful import Resource, Api
+# from sentence_transformers import SentenceTransformer, util
 
 
 @app.route('/', methods=['GET','POST'])
@@ -91,19 +92,21 @@ def t5occsingle(eval_text):
     model = SentenceTransformer("Jiahuixu/occt5")
     targetlabs = dict_text2pums['Description (2018 Census Occupation Code)']
 
-    file_path_embs = os.path.join(app.root_path, 'static', 'workingdata', 'targetembs.pt')
-    targetembs = torch.load(file_path_embs)
-
+    file_path_embs = os.path.join(app.root_path, 'static', 'workingdata', 'targetembs.csv')
+    targetembs = np.loadtxt(file_path_embs,delimiter=",")
+    # print(targetembs)
     targetlabs.reset_index(drop=True,inplace=True)
     input_emb = model.encode(eval_text)
-    
+
     cos_sim = [util.cos_sim(input_emb,i) for i in targetembs]
     all_sentence_combinations = []
     for i in range(len(cos_sim)-1):
-    all_sentence_combinations.append([cos_sim[i][0][0],i])
+        all_sentence_combinations.append([cos_sim[i][0][0],i])
     all_sentence_combinations = sorted(all_sentence_combinations, key=lambda x: x[0], reverse=True)
+    
     occtext = [targetlabs.iloc[i[1]] for i in all_sentence_combinations[0:1]]
     occpums = dict_text2pums.loc[str.strip(occtext[0]),'2018 Census PUMS Occupation Code']
+    
     return {str(occpums):occtext[0]}
     # return eval_text
 
