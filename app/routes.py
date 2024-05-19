@@ -94,7 +94,7 @@ def t5occsingle(eval_text):
     targetembs = np.loadtxt(file_path_embs,delimiter=",")
     targetlabs.reset_index(drop=True,inplace=True)
 
-    # model = SentenceTransformer("Jiahuixu/occt5")
+    model = SentenceTransformer("Jiahuixu/occt5")
     # input_emb = model.encode(eval_text)
     # cos_sim = [util.cos_sim(input_emb,i) for i in targetembs]
     # all_sentence_combinations = []
